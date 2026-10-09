@@ -1,0 +1,239 @@
+/* Terminal styling ported from https://ghostty.org (MIT License).
+   Original: Terminal.module.css + design tokens from globals.css. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/jetbrains-mono.woff2") format("woff2");
+  unicode-range: U+00-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC,
+    U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --brand-color: #3551f3;
+  --gray-0: #0f0f11;
+  --gray-1: #16161a;
+  --gray-3: #4c4c50;
+  --gray-5: #959597;
+  --gray-6: #c3c3c4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--gray-0);
+}
+
+body {
+  color: var(--gray-5);
+  font-family: "JetBrains Mono", monospace;
+  line-height: 1.6em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand-color) 60%, transparent);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  padding: 32px 0;
+}
+
+.terminal-wrapper {
+  display: grid;
+  place-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+/* --- terminal chrome -------------------------------------------------- */
+
+.terminal {
+  --code-margin-top: 12px;
+  --padding: 7px;
+  --color-sunset-orange: #ff605c;
+  --color-pastel-orange: #ffbd44;
+  --color-malachite: #00ca4e;
+  --adw-headerbar-color: #303030;
+  --adw-headerbar-shade-color: #0000005c;
+
+  width: calc(
+    (var(--columns) * var(--content-character-width)) + (2 * var(--padding)) + 2px
+  );
+  height: calc(
+    (var(--rows) * var(--content-character-height)) + (2 * var(--padding)) +
+      var(--control-size) + var(--code-margin-top)
+  );
+  background: var(--gray-0);
+  border: 1px solid var(--gray-3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal.font-xtiny {
+  --title-font-size: 12px;
+  --content-font-size: 6px;
+  --content-character-width: 3.6px;
+  --content-character-height: 9px;
+}
+.terminal.font-tiny {
+  --title-font-size: 14px;
+  --content-font-size: 10px;
+  --content-character-width: 6px;
+  --content-character-height: 13.8px;
+}
+.terminal.font-small {
+  --title-font-size: 14px;
+  --content-font-size: 12px;
+  --content-character-width: 7.2px;
+  --content-character-height: 16.6px;
+}
+.terminal.font-medium {
+  --title-font-size: 16px;
+  --content-font-size: 14px;
+  --content-character-width: 8.4px;
+  --content-character-height: 19.1px;
+}
+.terminal.font-large {
+  --title-font-size: 16px;
+  --content-font-size: 16px;
+  --content-character-width: 9.6px;
+  --content-character-height: 21.5px;
+}
+
+.terminal .header {
+  padding: var(--padding);
+  border-radius: 9px 9px 0 0;
+  display: grid;
+  grid-template: "start title end" / 1fr 1fr 1fr;
+  align-items: center;
+  position: relative;
+}
+
+.terminal .header .window-controls {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.terminal .header .window-controls.start {
+  grid-area: start;
+  justify-content: start;
+}
+.terminal .header .window-controls.end {
+  grid-area: end;
+  justify-content: end;
+}
+.terminal .header .window-controls li {
+  width: var(--control-size);
+  height: var(--control-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.terminal .header .window-controls li.circular-button {
+  background: var(--gray-3);
+  border-radius: var(--control-size);
+}
+.terminal .header .window-controls li .icon {
+  transform: scale(0.75);
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.terminal .header .title {
+  grid-area: title;
+  text-align: center;
+  font-size: var(--title-font-size);
+  margin: 0;
+}
+
+.terminal .content {
+  font-size: var(--content-font-size);
+  font-family: "JetBrains Mono", monospace;
+  color: var(--gray-6);
+  padding: var(--padding);
+  padding-top: var(--code-margin-top);
+  overflow-y: scroll;
+  word-wrap: break-word;
+  white-space: normal;
+  flex: 1;
+}
+.terminal .content.disable-scrolling {
+  overflow-y: hidden;
+}
+.terminal .content > div {
+  white-space: pre-wrap;
+}
+.terminal .content > div .b {
+  color: var(--brand-color);
+}
+
+/* Adwaita (GNOME) chrome for Linux user agents */
+.terminal.adwaita {
+  --control-size: 18px;
+  box-shadow: 0px 2px 1px var(--adw-headerbar-shade-color);
+}
+.terminal.adwaita .header {
+  background: var(--adw-headerbar-color);
+  border-bottom: 2px var(--adw-headerbar-shade-color);
+}
+.terminal.adwaita .header .window-controls {
+  gap: 12px;
+}
+.terminal.adwaita .header .title {
+  color: #fff;
+  font-weight: 800;
+}
+.terminal.adwaita .header .icon {
+  color: #fff;
+}
+
+/* macOS traffic-light chrome otherwise */
+.terminal.macos {
+  --control-size: 12px;
+}
+.terminal.macos .header {
+  padding: var(--padding) 11px;
+}
+.terminal.macos .header .window-controls {
+  gap: 8px;
+}
+.terminal.macos .header .window-controls li:first-child {
+  background: var(--color-sunset-orange);
+}
+.terminal.macos .header .window-controls li:nth-child(2) {
+  background: var(--color-pastel-orange);
+}
+.terminal.macos .header .window-controls li:last-child {
+  background: var(--color-malachite);
+}
+
+/* --- page extras ------------------------------------------------------- */
+
+.tagline {
+  text-align: center;
+  color: var(--gray-5);
+  margin: 0 20px 20px;
+  max-width: 700px;
+}
+
+.credit {
+  text-align: center;
+  color: var(--gray-5);
+  font-size: 12px;
+}
+.credit a {
+  color: var(--brand-color);
+}
