@@ -33,7 +33,7 @@ body {
 body {
   color: var(--gray-5);
   font-family: "JetBrains Mono", monospace;
-  line-height: 1.6em;
+  line-height: 1.3em;
 }
 
 ::selection {
