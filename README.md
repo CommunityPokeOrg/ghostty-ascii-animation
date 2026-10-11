@@ -56,7 +56,9 @@ One-time setup:
 ```
 index.html                      demo page
 assets/css/terminal.css         ported terminal styles + design tokens
+assets/css/effects.css          effects panel + live-effect styles
 assets/js/terminal.js           vanilla JS port of the animation driver
+assets/js/effects.js            interactive effects panel (localStorage persistence)
 assets/js/frames.js             the 235 frames (window.GHOSTTY_TERMINAL_DATA)
 assets/fonts/jetbrains-mono.woff2
 extracted/                      raw, unmodified extracted source for reference

@@ -15,7 +15,9 @@
       type="font/woff2"
       crossorigin
     />
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="assets/css/terminal.css" />
+    <link rel="stylesheet" href="assets/css/effects.css" />
   </head>
   <body>
     <main class="page">
@@ -31,7 +33,126 @@
         MIT License)
       </p>
     </main>
+
+    <button
+      type="button"
+      class="fx-toggle"
+      id="fx-toggle"
+      aria-expanded="false"
+      aria-controls="fx-panel"
+    >
+      Effects
+    </button>
+
+    <section
+      class="fx-panel"
+      id="fx-panel"
+      role="region"
+      aria-label="Visual effects controls"
+      hidden
+    >
+      <h2 class="fx-heading">Effects</h2>
+
+      <fieldset class="fx-group">
+        <legend>Color &amp; tone</legend>
+        <div class="fx-control">
+          <label for="fx-hue">Hue rotate</label>
+          <input type="range" id="fx-hue" data-fx="hue" min="0" max="360" step="1" />
+          <output for="fx-hue" id="fx-hue-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-brightness">Brightness</label>
+          <input type="range" id="fx-brightness" data-fx="brightness" min="0.2" max="2" step="0.05" />
+          <output for="fx-brightness" id="fx-brightness-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-contrast">Contrast</label>
+          <input type="range" id="fx-contrast" data-fx="contrast" min="0.2" max="2" step="0.05" />
+          <output for="fx-contrast" id="fx-contrast-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-saturate">Saturation</label>
+          <input type="range" id="fx-saturate" data-fx="saturate" min="0" max="3" step="0.05" />
+          <output for="fx-saturate" id="fx-saturate-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-grayscale">Grayscale</label>
+          <input type="range" id="fx-grayscale" data-fx="grayscale" min="0" max="1" step="0.05" />
+          <output for="fx-grayscale" id="fx-grayscale-out"></output>
+        </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-invert" data-fx="invert" />
+          <label for="fx-invert">Invert colors</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="fx-group">
+        <legend>Glow</legend>
+        <div class="fx-control fx-control-check">
+          <input type="color" id="fx-glow-color" data-fx="glowColor" value="#3551f3" />
+          <label for="fx-glow-color">Glow color</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-glow-blur">Glow blur</label>
+          <input type="range" id="fx-glow-blur" data-fx="glowBlur" min="0" max="40" step="1" />
+          <output for="fx-glow-blur" id="fx-glow-blur-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-glow-spread">Glow intensity</label>
+          <input type="range" id="fx-glow-spread" data-fx="glowSpread" min="0" max="30" step="1" />
+          <output for="fx-glow-spread" id="fx-glow-spread-out"></output>
+        </div>
+      </fieldset>
+
+      <fieldset class="fx-group">
+        <legend>CRT</legend>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-scanlines" data-fx="scanlines" />
+          <label for="fx-scanlines">Scanlines</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-scanline-opacity">Scanline intensity</label>
+          <input type="range" id="fx-scanline-opacity" data-fx="scanlineOpacity" min="0" max="1" step="0.05" />
+          <output for="fx-scanline-opacity" id="fx-scanline-opacity-out"></output>
+        </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-flicker" data-fx="flicker" />
+          <label for="fx-flicker">Flicker</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-flicker-amp">Flicker intensity</label>
+          <input type="range" id="fx-flicker-amp" data-fx="flickerAmp" min="0" max="0.5" step="0.01" />
+          <output for="fx-flicker-amp" id="fx-flicker-amp-out"></output>
+        </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-vignette" data-fx="vignette" />
+          <label for="fx-vignette">Vignette</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="fx-group">
+        <legend>Text</legend>
+        <div class="fx-control">
+          <label for="fx-letter-spacing">Letter spacing</label>
+          <input type="range" id="fx-letter-spacing" data-fx="letterSpacing" min="0" max="6" step="0.2" />
+          <output for="fx-letter-spacing" id="fx-letter-spacing-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-scale">Scale</label>
+          <input type="range" id="fx-scale" data-fx="scale" min="0.5" max="2" step="0.05" />
+          <output for="fx-scale" id="fx-scale-out"></output>
+        </div>
+      </fieldset>
+
+      <button type="button" class="fx-reset" id="fx-reset">Reset to defaults</button>
+    </section>
+
+    <div class="fx-scanlines" id="fx-scanlines-overlay" aria-hidden="true" hidden></div>
+    <div class="fx-flicker" id="fx-flicker-overlay" aria-hidden="true" hidden></div>
+    <div class="fx-vignette" id="fx-vignette-overlay" aria-hidden="true" hidden></div>
+
     <script src="assets/js/frames.js"></script>
     <script src="assets/js/terminal.js"></script>
+    <script src="assets/js/effects.js"></script>
   </body>
 </html>
