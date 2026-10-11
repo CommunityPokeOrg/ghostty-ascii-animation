@@ -16,6 +16,12 @@
       crossorigin
     />
     <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&family=Fira+Code&family=IBM+Plex+Mono&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/css/terminal.css" />
     <link rel="stylesheet" href="assets/css/effects.css" />
   </head>
@@ -102,6 +108,15 @@
           <input type="range" id="fx-glow-spread" data-fx="glowSpread" min="0" max="30" step="1" />
           <output for="fx-glow-spread" id="fx-glow-spread-out"></output>
         </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-afterglow" data-fx="afterglow" />
+          <label for="fx-afterglow">Bloom / afterglow</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-afterglow-blur">Afterglow intensity</label>
+          <input type="range" id="fx-afterglow-blur" data-fx="afterglowBlur" min="0" max="30" step="1" />
+          <output for="fx-afterglow-blur" id="fx-afterglow-blur-out"></output>
+        </div>
       </fieldset>
 
       <fieldset class="fx-group">
@@ -128,10 +143,56 @@
           <input type="checkbox" id="fx-vignette" data-fx="vignette" />
           <label for="fx-vignette">Vignette</label>
         </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-ca" data-fx="ca" />
+          <label for="fx-ca">Chromatic aberration</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-ca-amp">Aberration intensity</label>
+          <input type="range" id="fx-ca-amp" data-fx="caAmp" min="0" max="4" step="0.1" />
+          <output for="fx-ca-amp" id="fx-ca-amp-out"></output>
+        </div>
+        <div class="fx-control">
+          <label for="fx-curve">Screen curvature</label>
+          <input type="range" id="fx-curve" data-fx="curve" min="0" max="8" step="0.5" />
+          <output for="fx-curve" id="fx-curve-out"></output>
+        </div>
+        <div class="fx-control fx-control-check">
+          <input type="checkbox" id="fx-noise" data-fx="noise" />
+          <label for="fx-noise">Noise / grain</label>
+        </div>
+        <div class="fx-control">
+          <label for="fx-noise-opacity">Noise intensity</label>
+          <input type="range" id="fx-noise-opacity" data-fx="noiseOpacity" min="0" max="0.3" step="0.01" />
+          <output for="fx-noise-opacity" id="fx-noise-opacity-out"></output>
+        </div>
       </fieldset>
 
       <fieldset class="fx-group">
         <legend>Text</legend>
+        <div class="fx-control fx-control-select">
+          <label for="fx-font">Font</label>
+          <select id="fx-font" data-fx="font">
+            <option value="jetbrains">JetBrains Mono</option>
+            <option value="vt323">VT323</option>
+            <option value="firacode">Fira Code</option>
+            <option value="plex">IBM Plex Mono</option>
+            <option value="courier">Courier New</option>
+          </select>
+        </div>
+        <div class="fx-control fx-control-select">
+          <label for="fx-phosphor">Phosphor</label>
+          <select id="fx-phosphor" data-fx="phosphor">
+            <option value="default">Default</option>
+            <option value="amber">Amber</option>
+            <option value="green">Green</option>
+          </select>
+        </div>
+        <div class="fx-control">
+          <label for="fx-line-height">Line height</label>
+          <input type="range" id="fx-line-height" data-fx="lineHeight" min="0.8" max="2" step="0.05" />
+          <output for="fx-line-height" id="fx-line-height-out"></output>
+        </div>
         <div class="fx-control">
           <label for="fx-letter-spacing">Letter spacing</label>
           <input type="range" id="fx-letter-spacing" data-fx="letterSpacing" min="0" max="6" step="0.2" />
@@ -150,6 +211,7 @@
     <div class="fx-scanlines" id="fx-scanlines-overlay" aria-hidden="true" hidden></div>
     <div class="fx-flicker" id="fx-flicker-overlay" aria-hidden="true" hidden></div>
     <div class="fx-vignette" id="fx-vignette-overlay" aria-hidden="true" hidden></div>
+    <div class="fx-noise" id="fx-noise-overlay" aria-hidden="true" hidden></div>
 
     <script src="assets/js/frames.js"></script>
     <script src="assets/js/terminal.js"></script>

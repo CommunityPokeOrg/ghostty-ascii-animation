@@ -8,6 +8,20 @@
 
   const STORAGE_KEY = "ghostty-ascii-fx";
 
+  const FONT_STACKS = {
+    jetbrains: '"JetBrains Mono", monospace',
+    vt323: '"VT323", "JetBrains Mono", monospace',
+    firacode: '"Fira Code", "JetBrains Mono", monospace',
+    plex: '"IBM Plex Mono", "JetBrains Mono", monospace',
+    courier: '"Courier New", Courier, monospace',
+  };
+
+  const PHOSPHOR = {
+    default: { fg: "#c3c3c4", accent: "#3551f3" },
+    amber: { fg: "#ffb000", accent: "#ffd27a" },
+    green: { fg: "#33ff66", accent: "#8affc1" },
+  };
+
   const DEFAULTS = {
     hue: 0,
     brightness: 1,
@@ -18,11 +32,21 @@
     glowColor: "#3551f3",
     glowBlur: 0,
     glowSpread: 0,
+    afterglow: false,
+    afterglowBlur: 8,
     scanlines: false,
     scanlineOpacity: 0.25,
     flicker: false,
     flickerAmp: 0.08,
     vignette: false,
+    ca: false,
+    caAmp: 1,
+    curve: 0,
+    noise: false,
+    noiseOpacity: 0.08,
+    font: "jetbrains",
+    phosphor: "default",
+    lineHeight: 1.3,
     letterSpacing: 0,
     scale: 1,
   };
@@ -51,6 +75,19 @@
     root.style.setProperty(name, value);
   }
 
+  function applyCA() {
+    setVar("--fx-ca", (state.ca ? state.caAmp : 0) + "px");
+  }
+
+  function applyAfterglow() {
+    setVar("--fx-afterglow", (state.afterglow ? state.afterglowBlur : 0) + "px");
+  }
+
+  function applyNoise() {
+    setVar("--fx-noise", state.noise ? state.noiseOpacity : 0);
+    setOverlay("fx-noise-overlay", state.noise);
+  }
+
   const APPLIERS = {
     hue: (v) => setVar("--fx-hue", v + "deg"),
     brightness: (v) => setVar("--fx-brightness", v),
@@ -61,8 +98,22 @@
     glowColor: (v) => setVar("--fx-glow-color", v),
     glowBlur: (v) => setVar("--fx-glow-blur", v + "px"),
     glowSpread: (v) => setVar("--fx-glow-spread", v + "px"),
+    afterglow: applyAfterglow,
+    afterglowBlur: applyAfterglow,
     scanlineOpacity: (v) => setVar("--fx-scanline-opacity", v),
     flickerAmp: (v) => setVar("--fx-flicker-amp", v),
+    ca: applyCA,
+    caAmp: applyCA,
+    curve: (v) => setVar("--fx-curve", v + "deg"),
+    noise: applyNoise,
+    noiseOpacity: applyNoise,
+    font: (v) => setVar("--fx-font", FONT_STACKS[v] || FONT_STACKS.jetbrains),
+    phosphor: (v) => {
+      const p = PHOSPHOR[v] || PHOSPHOR.default;
+      setVar("--fx-fg-color", p.fg);
+      setVar("--fx-accent-color", p.accent);
+    },
+    lineHeight: (v) => setVar("--fx-line-height", v),
     letterSpacing: (v) => setVar("--fx-letter-spacing", v + "px"),
     scale: (v) => setVar("--fx-scale", v),
     scanlines: (v) => setOverlay("fx-scanlines-overlay", v),
@@ -74,10 +125,15 @@
     hue: (v) => v + "°",
     glowBlur: (v) => v + "px",
     glowSpread: (v) => v + "px",
+    afterglowBlur: (v) => v + "px",
     letterSpacing: (v) => v + "px",
+    caAmp: (v) => v + "px",
+    curve: (v) => v + "°",
     scale: (v) => v + "×",
     scanlineOpacity: (v) => v,
     flickerAmp: (v) => v,
+    noiseOpacity: (v) => v,
+    lineHeight: (v) => v,
     brightness: (v) => v,
     contrast: (v) => v,
     saturate: (v) => v,
@@ -144,6 +200,7 @@
 
     document.querySelectorAll("[data-fx]").forEach((input) => {
       input.addEventListener("input", onInput);
+      input.addEventListener("change", onInput); // <select> reliably fires change
     });
 
     const reset = document.getElementById("fx-reset");
